@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>לוח שנה – ספטמבר 2026</title>
+  <style>
+    :root {
+      --ink: #18202a;
+      --muted: #667085;
+      --line: #d7dce3;
+      --paper: #ffffff;
+      --panel: #f6f8fb;
+      --closed: #fff4e8;
+      --closed-border: #efc48d;
+      --red: #b42318;
+      --red-bg: #fdecec;
+      --red-border: #ef9a95;
+      --oct: #f1f3f6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #eef1f5;
+      color: var(--ink);
+      font-family: Arial, "Noto Sans Hebrew", sans-serif;
+    }
+
+    .page {
+      width: min(1400px, calc(100% - 32px));
+      margin: 24px auto;
+      background: var(--paper);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(16,24,40,.10);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 28px 32px 22px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -.4px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .calendar-wrap { padding: 22px; }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      direction: rtl;
+    }
+
+    .weekday, .day {
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .weekday {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 6px;
+      font-weight: 700;
+      background: var(--panel);
+      font-size: 15px;
+    }
+
+    .weekday.saturday {
+      color: var(--red);
+      background: var(--red-bg);
+    }
+
+    .day {
+      min-height: 150px;
+      padding: 11px;
+      position: relative;
+      background: #fff;
+    }
+
+    .day.empty { background: #fafbfc; }
+    .day.october { background: var(--oct); }
+
+    .date {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 34px;
+      padding: 0 8px;
+      border-radius: 9px;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .month-tag {
+      font-size: 12px;
+      color: var(--muted);
+      margin-right: 6px;
+      font-weight: 700;
+    }
+
+    .event {
+      font-size: 14px;
+      line-height: 1.45;
+      margin-top: 4px;
+      padding: 8px 9px;
+      border-radius: 9px;
+      background: var(--closed);
+      border: 1px solid var(--closed-border);
+      font-weight: 700;
+    }
+
+    .event small {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b4c2a;
+    }
+
+    .day.red-day {
+      background: var(--red-bg);
+      box-shadow: inset 0 0 0 2px var(--red-border);
+    }
+
+    .day.red-day .date { color: var(--red); }
+    .day.red-day .event {
+      background: #fff7f6;
+      border-color: #e9a6a1;
+      color: #7a1b15;
+    }
+    .day.red-day .event small { color: #8f2d26; }
+
+    .legend {
+      display: flex;
+      gap: 14px 22px;
+      flex-wrap: wrap;
+      padding: 0 22px 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .legend-item { display: inline-flex; align-items: center; gap: 7px; }
+    .swatch { width: 18px; height: 18px; border-radius: 5px; border: 1px solid var(--line); }
+    .swatch.red { background: var(--red-bg); border-color: var(--red-border); }
+    .swatch.closed { background: var(--closed); border-color: var(--closed-border); }
+
+    .note {
+      margin: 0 22px 26px;
+      padding: 10px 12px;
+      border-radius: 9px;
+      background: #f8fafc;
+      color: #475467;
+      font-size: 13px;
+      border: 1px solid #e4e7ec;
+    }
+
+    @media (max-width: 900px) {
+      .page { width: 100%; margin: 0; border-radius: 0; }
+      .calendar-wrap { padding: 8px; overflow-x: auto; }
+      .calendar { min-width: 840px; }
+      .day { min-height: 135px; }
+      header { padding: 22px 18px 18px; }
+      .legend, .note { margin-left: 12px; margin-right: 12px; }
+    }
+
+    @media print {
+      @page { size: A4 landscape; margin: 8mm; }
+      body { background: #fff; }
+      .page { width: 100%; margin: 0; box-shadow: none; border-radius: 0; }
+      header { padding: 10px 14px 8px; }
+      h1 { font-size: 30px; }
+      .calendar-wrap { padding: 8px 12px; }
+      .weekday { min-height: 35px; }
+      .day { min-height: 108px; padding: 7px; }
+      .date { height: 26px; min-width: 26px; font-size: 15px; margin-bottom: 5px; }
+      .event { font-size: 11px; line-height: 1.3; padding: 5px 6px; }
+      .event small { font-size: 10px; }
+      .legend { padding: 0 12px 8px; font-size: 11px; }
+      .note { margin: 0 12px 6px; padding: 5px 8px; font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>ספטמבר 2026</h1>
+      <p class="subtitle">ימי פעילות קמפוס העיר</p>
+    </header>
+
+    <section class="calendar-wrap" aria-label="לוח שנה ספטמבר 2026">
+      <div class="calendar">
+        <div class="weekday">ראשון</div>
+        <div class="weekday">שני</div>
+        <div class="weekday">שלישי</div>
+        <div class="weekday">רביעי</div>
+        <div class="weekday">חמישי</div>
+        <div class="weekday">שישי</div>
+        <div class="weekday saturday">שבת</div>
+
+        <!-- Week 1 -->
+        <div class="day empty"></div>
+        <div class="day empty"></div>
+        <div class="day"><span class="date">1</span></div>
+        <div class="day"><span class="date">2</span></div>
+        <div class="day"><span class="date">3</span></div>
+        <div class="day"><span class="date">4</span></div>
+        <div class="day red-day"><span class="date">5</span></div>
+
+        <!-- Week 2 -->
+        <div class="day"><span class="date">6</span></div>
+        <div class="day"><span class="date">7</span></div>
+        <div class="day"><span class="date">8</span></div>
+        <div class="day"><span class="date">9</span></div>
+        <div class="day">
+          <span class="date">10</span>
+          <div class="event">יום גשר<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day red-day">
+          <span class="date">11</span>
+          <div class="event">ערב ראש השנה<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day red-day"><span class="date">12</span></div>
+
+        <!-- Week 3 -->
+        <div class="day red-day">
+          <span class="date">13</span>
+          <div class="event">ראש השנה<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day"><span class="date">14</span></div>
+        <div class="day"><span class="date">15</span></div>
+        <div class="day"><span class="date">16</span></div>
+        <div class="day"><span class="date">17</span></div>
+        <div class="day"><span class="date">18</span></div>
+        <div class="day red-day"><span class="date">19</span></div>
+
+        <!-- Week 4 -->
+        <div class="day red-day">
+          <span class="date">20</span>
+          <div class="event">ערב יום הכיפורים<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day red-day">
+          <span class="date">21</span>
+          <div class="event">יום הכיפורים<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day"><span class="date">22</span></div>
+        <div class="day"><span class="date">23</span></div>
+        <div class="day">
+          <span class="date">24</span>
+          <div class="event">יום גשר<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day red-day">
+          <span class="date">25</span>
+          <div class="event">ערב חג סוכות<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day red-day"><span class="date">26</span></div>
+
+        <!-- Week 5 -->
+        <div class="day">
+          <span class="date">27</span>
+          <div class="event">חול המועד סוכות<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day">
+          <span class="date">28</span>
+          <div class="event">חול המועד סוכות<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day">
+          <span class="date">29</span>
+          <div class="event">חול המועד סוכות<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day">
+          <span class="date">30</span>
+          <div class="event">חול המועד סוכות<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day october">
+          <span class="date">1</span><span class="month-tag">אוק׳</span>
+          <div class="event">חול המועד סוכות<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day october red-day">
+          <span class="date">2</span><span class="month-tag">אוק׳</span>
+          <div class="event">ערב חג שמחת תורה<small>הקמפוס סגור</small></div>
+        </div>
+        <div class="day october red-day"><span class="date">3</span><span class="month-tag">אוק׳</span></div>
+      </div>
+    </section> 
+  </main>
+</body>
+</html>
